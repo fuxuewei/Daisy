@@ -1,13 +1,12 @@
-import React from 'react';
-import {Button} from 'antd';
-import './App.css';
+import * as React from 'react';
+import RoutersConfig from './routers';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <Button type="primary">button</Button>
-    </div>
-  );
+class App extends React.Component {
+  public render() {
+    return (
+      <RoutersConfig />
+    );
+  }
 }
 
 export default App;
