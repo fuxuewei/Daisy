@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb, Icon, Dropdown } from 'antd';
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import Tabel from '../components/topics/Tabel';
-
+import { HashRouter as Router, Route, Link } from 'react-router-dom';
+import Table from './topics/Table';
+import NotFound from './NotFound'
 const Home: React.FC = () => {
     interface Person{
         name:string | null;
@@ -40,7 +40,9 @@ const Home: React.FC = () => {
                     }
                     >
                         {value.children?value.children.map((child:any,index:number)=>{
-                            return <Menu.Item key={child}>{child}</Menu.Item>
+                            return <Menu.Item key={child}>
+                              <Link to={"/"+child}>{child}</Link>
+                              </Menu.Item>
                         }):()=>{console.log('null')}}
                         
                 </SubMenu>
@@ -69,6 +71,7 @@ const Home: React.FC = () => {
     ]
     
     return (
+      <Router>
         <Layout>
             <Header className="header">
                 <div className="logo" />
@@ -96,11 +99,17 @@ const Home: React.FC = () => {
                 {nav(subnavs)}
             </Sider>
             <Layout style={{padding: '0 24px 24px'}}>
-                <Route path="/tabel" component={Tabel} />
+                <Breadcrumb style={{ margin: '16px 0' }}>
+                    <Breadcrumb.Item>Home</Breadcrumb.Item>
+                    <Breadcrumb.Item>List</Breadcrumb.Item>
+                    <Breadcrumb.Item>App</Breadcrumb.Item>
+                </Breadcrumb>
+                <Route path="/Components/Table" component={Table} />
+                <Route path="/404" component={NotFound} />
             </Layout>
         </Layout>
         </Layout>
+        </Router>
     );
 }
-
 export default Home;
