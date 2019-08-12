@@ -103,25 +103,23 @@ const Home: React.FC = () => {
             <Layout style={{padding: '0 24px 24px'}}>
                 <Breadcrumb style={{ margin: '16px 0' }}>
                     <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>List</Breadcrumb.Item>
-                    <Breadcrumb.Item>App</Breadcrumb.Item>
+                    <Breadcrumb.Item>{window.location.hash.split('/')[1]}</Breadcrumb.Item>
+                    <Breadcrumb.Item>{window.location.hash.split('/')[2]}</Breadcrumb.Item>
                 </Breadcrumb>
-        <Layout>
-        <Content
-            style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-                background:'#fff'
-            }}
-        >
-                <Route path="/Components/Table" component={Tables} />
-                <Route path="/Components/Tabs" component={Tab} />
-                <Route path="/Components/Form" component={VForm} />
-                <Route path="/404" component={NotFound} />
+                <Content
+                    style={{
+                        padding: 24,
+                        margin: 0,
+                        minHeight: 280,
+                        background:'#fff'
+                    }}
+                >
+                    <Route path="/Components/Table" component={Tables} />
+                    <Route path="/Components/Tabs" component={Tab} />
+                    <Route path="/Components/Form" component={VForm} />
+                    <Route path="/404" component={NotFound} />
 
-        </Content>
-    </Layout>
+                </Content>
             </Layout>
         </Layout>
         </Layout>
