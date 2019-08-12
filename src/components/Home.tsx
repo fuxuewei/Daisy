@@ -1,8 +1,11 @@
 import React from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Dropdown } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Dropdown,Table } from 'antd';
 import { HashRouter as Router, Route, Link } from 'react-router-dom';
-import Table from './topics/Table';
+import Tables from './topics/Table';
+import Tab from './topics/Tabs';
+import VForm from './topics/Form';
 import NotFound from './NotFound'
+
 const Home: React.FC = () => {
     interface Person{
         name:string | null;
@@ -41,7 +44,7 @@ const Home: React.FC = () => {
                     >
                         {value.children?value.children.map((child:any,index:number)=>{
                             return <Menu.Item key={child}>
-                              <Link to={"/"+child}>{child}</Link>
+                              <Link to={"/"+value.name+"/"+child}>{child}</Link>
                               </Menu.Item>
                         }):()=>{console.log('null')}}
                         
@@ -69,7 +72,6 @@ const Home: React.FC = () => {
             icon:'global'
         }
     ]
-    
     return (
       <Router>
         <Layout>
@@ -104,8 +106,22 @@ const Home: React.FC = () => {
                     <Breadcrumb.Item>List</Breadcrumb.Item>
                     <Breadcrumb.Item>App</Breadcrumb.Item>
                 </Breadcrumb>
-                <Route path="/Components/Table" component={Table} />
+        <Layout>
+        <Content
+            style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+                background:'#fff'
+            }}
+        >
+                <Route path="/Components/Table" component={Tables} />
+                <Route path="/Components/Tabs" component={Tab} />
+                <Route path="/Components/Form" component={VForm} />
                 <Route path="/404" component={NotFound} />
+
+        </Content>
+    </Layout>
             </Layout>
         </Layout>
         </Layout>

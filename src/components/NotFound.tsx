@@ -5,11 +5,6 @@ const { Header, Content, Sider } = Layout;
 const NotFound: React.FC = () => {
 return (
     <Layout>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
         <Content
             style={{
                 padding: 24,
