@@ -6,10 +6,9 @@ import LoginPage from '../components/Login';
 const basename = '/';
 
 const RoutersConfig = () => {
+    var redirect = '/login'
     if(localStorage.getItem("name")){
-        var redirect = '/404'
-    }else{
-        var redirect = '/login'
+        redirect = '/404'
     }
     return (
         <Router basename={basename}>

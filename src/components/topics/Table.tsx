@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import { Layout,Breadcrumb } from 'antd';
 import { Table, Divider, Tag } from 'antd';
-const { Header, Content, Sider } = Layout;
 
 interface Record{
     name:String
@@ -54,7 +52,10 @@ const Tables: React.FC = () => {
         <span>
           <a href="javascript:;">Invite {record.name}</a>
           <Divider type="vertical" />
-          <a href="javascript:;" onClick={()=> {data.splice(index,1);console.log(data);setData(data)}}>Delete</a>
+          <a href="javascript:;" onClick={()=> {
+            data.splice(index,1);
+            console.log(data);
+            setData(data)}}>Delete</a>
         </span>
       ),
     },

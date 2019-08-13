@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Dropdown,Table } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Dropdown } from 'antd';
 import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import Tables from './topics/Table';
 import Tab from './topics/Tabs';

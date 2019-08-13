@@ -1,6 +1,6 @@
 import React from 'react';
-import { Layout,Breadcrumb } from 'antd';
-const { Header, Content, Sider } = Layout;
+import { Layout} from 'antd';
+const { Content } = Layout;
 
 const NotFound: React.FC = () => {
 return (
