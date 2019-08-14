@@ -14,6 +14,7 @@ const RoutersConfig = () => {
         <Router basename={basename}>
             <Switch>
                 <Route path='/Components/:label' component={HomePage} />
+                <Route path='/HttpRequest/:label' component={HomePage} />
                 <Route path='/login' exact={true} component={LoginPage} />
                 <Route path='/home' component={HomePage} />
                 <Route path="/404" component={HomePage} />

@@ -5,6 +5,7 @@ import Tables from './topics/Table';
 import Tab from './topics/Tabs';
 import VForm from './topics/Form';
 import NotFound from './NotFound'
+import GoodsMsg from './requests/GoodsMsg'
 
 const Home: React.FC = () => {
     interface Person{
@@ -68,7 +69,7 @@ const Home: React.FC = () => {
         },
         {
             name:'HttpRequest',
-            children:['GoodsList'],
+            children:['GoodsMsg'],
             icon:'global'
         }
     ]
@@ -117,6 +118,7 @@ const Home: React.FC = () => {
                     <Route path="/Components/Table" component={Tables} />
                     <Route path="/Components/Tabs" component={Tab} />
                     <Route path="/Components/Form" component={VForm} />
+                    <Route path="/HttpRequest/GoodsMsg" component={GoodsMsg} />
                     <Route path="/404" component={NotFound} />
 
                 </Content>
