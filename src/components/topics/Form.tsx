@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import store from '../../store';
 import {
   Form,
@@ -62,7 +62,7 @@ function RegistrationForm(props:any) {
     confirmDirty: false,
     autoCompleteResult: [],
   };
-    const { getFieldDecorator } = props.form;
+    const { getFieldDecorator, setFieldsValue } = props.form;
     const { autoCompleteResult } = state;
 
     const formItemLayout = {
@@ -127,12 +127,11 @@ function RegistrationForm(props:any) {
     }
     //上传头像
     let unsubscribe = store.subscribe(()=>{
-      console.log(store.getState().img)
+      // console.log(store.getState().img)
     })
-    const UploadOptions = ()=>{
-
+    const UploadOptions = (props: any)=>{
       const [loading,setLoading] = useState(false);
-      const [imageUrl,setImageUrl] = useState();
+      const [imageUrl,setImageUrl] = useState('');
       const handleChange = (info:any) => {
         if (info.file.status === 'uploading') {
           setLoading(true);
@@ -141,14 +140,13 @@ function RegistrationForm(props:any) {
         if (info.file.status === 'done') {
           // Get this url from response in real world.
           getBase64(info.file.originFileObj, (imageUrl:string) =>{
-              setLoading(false)
+              // setLoading(false)
               setImageUrl(imageUrl)
+              props.setFieldsValue({
+                'head': imageUrl
+              })
               // 调用redux
-              store.dispatch({
-                type:'CHANGE_IMG',
-                payload:imageUrl
-              });
-              unsubscribe()
+              // setLoading(true)
             }
           );
         }
@@ -159,6 +157,7 @@ function RegistrationForm(props:any) {
           <div className="ant-upload-text">Upload</div>
         </div>
       );
+      console.log(props)
       return (
         <Upload
           name="avatar"
@@ -169,11 +168,11 @@ function RegistrationForm(props:any) {
           beforeUpload={beforeUpload}
           onChange={handleChange}
         >
-          {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+          {props.value ? <img src={props.value} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
         </Upload>
       );
     }
-  
+    console.log(store.getState().img)
     return(
     <Form {...formItemLayout} onSubmit={handleSubmit}>
         <Form.Item label="E-mail">
@@ -239,9 +238,10 @@ function RegistrationForm(props:any) {
         </Form.Item>
         <Form.Item label="Head">
           {getFieldDecorator('head', {
+            initialValue: "xxx",
             rules: [{ required: false}],
           })(
-            <UploadOptions />
+            <UploadOptions setFieldsValue={setFieldsValue} onChange={(res: any) => console.log} />
           )}
         </Form.Item>
         <Form.Item label="Captcha" extra="We must make sure that your are a human.">
