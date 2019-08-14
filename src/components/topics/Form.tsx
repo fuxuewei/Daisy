@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import store from '../../store';
 import {
   Form,
   Input,
@@ -125,12 +126,13 @@ function RegistrationForm(props:any) {
       return isJpgOrPng && isLt2M;
     }
     //上传头像
-
+    let unsubscribe = store.subscribe(()=>{
+      console.log(store.getState().img)
+    })
     const UploadOptions = ()=>{
 
       const [loading,setLoading] = useState(false);
       const [imageUrl,setImageUrl] = useState();
-    
       const handleChange = (info:any) => {
         if (info.file.status === 'uploading') {
           setLoading(true);
@@ -141,6 +143,12 @@ function RegistrationForm(props:any) {
           getBase64(info.file.originFileObj, (imageUrl:string) =>{
               setLoading(false)
               setImageUrl(imageUrl)
+              // 调用redux
+              store.dispatch({
+                type:'CHANGE_IMG',
+                payload:imageUrl
+              });
+              unsubscribe()
             }
           );
         }
