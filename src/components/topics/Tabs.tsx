@@ -20,27 +20,27 @@ const CollectionCreateForm = Form.create<any>({ name: 'form_in_modal' })(
           return (
             <Modal
               visible={visible}
-              title="Create a new collection"
-              okText="Create"
+              title="Add a new Tab"
+              okText="Save"
               onCancel={onCancel}
               onOk={onCreate}
             >
               <Form layout="vertical">
-                <Form.Item label="Title">
-                  {getFieldDecorator('title', {
-                    rules: [{ required: true, message: 'Please input the title of collection!' }],
+                <Form.Item label="Name">
+                  {getFieldDecorator('name', {
+                    rules: [{ required: true, message: 'Please input the name of Tab!' }],
                   })(<Input />)}
                 </Form.Item>
-                <Form.Item label="Description">
-                  {getFieldDecorator('description')(<Input type="textarea" />)}
+                <Form.Item label="Content">
+                  {getFieldDecorator('content')(<Input type="textarea" />)}
                 </Form.Item>
                 <Form.Item className="collection-create-form_last-form-item">
-                  {getFieldDecorator('modifier', {
+                  {getFieldDecorator('type', {
                     initialValue: 'public',
                   })(
                     <Radio.Group>
-                      <Radio value="public">Public</Radio>
-                      <Radio value="private">Private</Radio>
+                      <Radio value="android">Android</Radio>
+                      <Radio value="apple">Apple</Radio>
                     </Radio.Group>,
                   )}
                 </Form.Item>
@@ -71,9 +71,8 @@ class Tab extends React.Component {
         console.log(key)
     }
     saveFormRef = (formRef:any) => {
-      console.log(formRef)
         this.formRef = formRef;
-      };
+    };
     handleCreate = () => {
     const { form } = this.formRef.props;
     form.validateFields((err: any, values: any) => {
@@ -81,6 +80,8 @@ class Tab extends React.Component {
         return;
         }
 
+        this.state.tabs.push(values);
+        this.setState({tabs:this.state.tabs})
         console.log('Received values of form: ', values);
         form.resetFields();
         this.setState({ visible: false });

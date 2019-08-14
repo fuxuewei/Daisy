@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React,{useState} from 'react'
 import {
   Form,
   Input,
@@ -11,8 +11,14 @@ import {
   Checkbox,
   Button,
   AutoComplete,
-  message
+  message,
+  Upload
 } from 'antd';
+
+interface IFile {
+  type:string
+  size:number
+}
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 const residences = [
@@ -84,6 +90,7 @@ function RegistrationForm(props:any) {
       e.preventDefault();
       props.form.validateFieldsAndScroll((err:string, values:{}) => {
         if (!err) {
+          console.log(values)
           success()
         }
       });
@@ -99,11 +106,66 @@ function RegistrationForm(props:any) {
         <Option value="87">+87</Option>
       </Select>,
     );
+    
+    function getBase64(img:Blob, callback:any) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => callback(reader.result));
+      reader.readAsDataURL(img);
+    }
+    
+    function beforeUpload(file:IFile) {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      if (!isJpgOrPng) {
+        message.error('You can only upload JPG/PNG file!');
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        message.error('Image must smaller than 2MB!');
+      }
+      return isJpgOrPng && isLt2M;
+    }
+    //上传头像
 
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
+    const UploadOptions = ()=>{
 
+      const [loading,setLoading] = useState(false);
+      const [imageUrl,setImageUrl] = useState();
+    
+      const handleChange = (info:any) => {
+        if (info.file.status === 'uploading') {
+          setLoading(true);
+          return;
+        }
+        if (info.file.status === 'done') {
+          // Get this url from response in real world.
+          getBase64(info.file.originFileObj, (imageUrl:string) =>{
+              setLoading(false)
+              setImageUrl(imageUrl)
+            }
+          );
+        }
+      };
+      const uploadButton = (
+        <div>
+          <Icon type={loading ? 'loading' : 'plus'} />
+          <div className="ant-upload-text">Upload</div>
+        </div>
+      );
+      return (
+        <Upload
+          name="avatar"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          beforeUpload={beforeUpload}
+          onChange={handleChange}
+        >
+          {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        </Upload>
+      );
+    }
+  
     return(
     <Form {...formItemLayout} onSubmit={handleSubmit}>
         <Form.Item label="E-mail">
@@ -167,17 +229,11 @@ function RegistrationForm(props:any) {
             rules: [{ required: true, message: 'Please input your phone number!' }],
           })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
         </Form.Item>
-        <Form.Item label="Website">
-          {getFieldDecorator('website', {
-            rules: [{ required: true, message: 'Please input website!' }],
+        <Form.Item label="Head">
+          {getFieldDecorator('head', {
+            rules: [{ required: false}],
           })(
-            <AutoComplete
-              dataSource={websiteOptions}
-              onChange={()=>{console.log('xxx')}}
-              placeholder="website"
-            >
-              <Input />
-            </AutoComplete>,
+            <UploadOptions />
           )}
         </Form.Item>
         <Form.Item label="Captcha" extra="We must make sure that your are a human.">
