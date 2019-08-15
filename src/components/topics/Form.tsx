@@ -157,7 +157,6 @@ function RegistrationForm(props:any) {
           <div className="ant-upload-text">Upload</div>
         </div>
       );
-      console.log(props)
       return (
         <Upload
           name="avatar"
@@ -238,10 +237,11 @@ function RegistrationForm(props:any) {
         </Form.Item>
         <Form.Item label="Head">
           {getFieldDecorator('head', {
-            initialValue: "xxx",
-            rules: [{ required: false}],
+            rules: [{ required: false}]
           })(
-            <UploadOptions setFieldsValue={setFieldsValue} onChange={(res: any) => console.log} />
+          <UploadOptions 
+          setFieldsValue={setFieldsValue} 
+          onChange={(res: any) => console.log} />
           )}
         </Form.Item>
         <Form.Item label="Captcha" extra="We must make sure that your are a human.">
