@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import '../../assets/less/goodsmsg.less';
 import { Tree,Tag, Input, Tooltip, Icon } from 'antd';
 import { OmitProps } from 'antd/lib/transfer/renderListBody';
+import * as R from 'ramda'
 
 const { TreeNode } = Tree;
 interface List<T>{
@@ -57,24 +58,24 @@ const  TreeSelect = (props:any)=> {
 }
 //显示列表
 function EditableTagGroup(props:any){
-    const [tagss,setTagss] = useState(),
+    const [tagss,setTagss] = useState(props.checkedArr),
           [visible,setVisible] = useState(false),
-          [inputValue,setInputValue] = useState('')   
+          [inputValue,setInputValue] = useState('')  
+
     const handleClose = (removedTag:any) => {
+      var tags:any = []
       if(removedTag.key.length>2){
         const momo = removedTag.key.split('-')[0]
-        const cc = props.checkedArr.filter((tag:any) => tag.key !== momo );
-        const tags = cc.filter((tag:any) => tag !== removedTag );
-        props.changeValues(tags)
+        const cc = R.filter((tag:any) => tag.key !== momo)(props.checkedArr);
+        tags = R.filter((tag:any) => tag !== removedTag)(cc);
       }else if (removedTag.key.length<=2){
-        const tags2 = props.checkedArr.filter((tag:any) => {return tag.key.split('-')[0] !== removedTag.key});
-        props.changeValues(tags2)
+        tags = R.filter((tag:any) => {return tag.key.split('-')[0] !== removedTag.key})(props.checkedArr );
       }else{
-        const tags1 = props.checkedArr.filter((tag:any) => tag !== removedTag );
-        props.changeValues(tags1)
+        tags = R.filter((tag:any) => tag !== removedTag)(props.checkedArr);
       }
+      props.changeValues(tags)
     };
-  
+
     const showInput = () => {
       // this.setState({ inputVisible: true }, () => this.input.focus());
       setVisible(true)
@@ -85,9 +86,11 @@ function EditableTagGroup(props:any){
     };
   
     const handleInputConfirm = () => {
-      if (inputValue && tagss.indexOf(inputValue) === -1) {
-        setTagss([...tagss, inputValue]) 
+      let newArr = [{title:inputValue , key:'"'+list.length +'"'}]
+      if(props.checkedArr){
+        newArr = [...props.checkedArr,{title:inputValue , key:'"0'+list.length+'"'}]
       }
+      props.changeValues(newArr)
       setVisible(false)
       setInputValue('')
     };
@@ -134,12 +137,12 @@ function EditableTagGroup(props:any){
 const GoodsMsg:React.FC = ()=>{
   const [values,setValues] = useState()
   const [keys,setKeys] = useState()
-  function xx(abc:any[]){
-    if(abc){
-      setValues(abc)
+  function changeValues(values:any[]){
+    if(values){
+      setValues(values)
     }
     const vv:string[] = []
-    abc.map((item)=>{
+    values.map((item)=>{
       vv.push(item.key)
     })
     setKeys(vv)
@@ -148,10 +151,10 @@ const GoodsMsg:React.FC = ()=>{
         <div className="panel">
             <div className="area_top">
                 <div className="area">
-                    <TreeSelect changeValues={xx} checkedKeys={keys} checkedArr={values}/>
+                    <TreeSelect changeValues={changeValues} checkedKeys={keys} checkedArr={values}/>
                 </div>
                 <div className="area">
-                    <EditableTagGroup checkedArr={values} changeValues={xx}/>
+                    <EditableTagGroup checkedArr={values} changeValues={changeValues}/>
                 </div>
             </div>
 

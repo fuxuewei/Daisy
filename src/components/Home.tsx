@@ -6,7 +6,7 @@ import Tab from './topics/Tabs';
 import VForm from './topics/Form';
 import NotFound from './NotFound'
 import GoodsMsg from './requests/GoodsMsg'
-
+import HomePage from './topics/HomePage'
 const Home: React.FC = () => {
     interface Person{
         name:string | null;
@@ -73,6 +73,10 @@ const Home: React.FC = () => {
             icon:'global'
         }
     ]
+    const navList = [
+        {name:'Home'},
+        {name:'Img'}
+    ]
     return (
       <Router>
         <Layout>
@@ -81,12 +85,17 @@ const Home: React.FC = () => {
                 <Menu
                 theme="dark"
                 mode="horizontal"
-                defaultSelectedKeys={['2']}
+                defaultSelectedKeys={['0']}
                 style={{ lineHeight: '64px'}}
                 >
-                    <Menu.Item key="1">nav 1</Menu.Item>
-                    <Menu.Item key="2">nav 2</Menu.Item>
-                    <Menu.Item key="3">nav 3</Menu.Item>
+                    <Menu.Item key="0">
+                        <Link to={"/"}><Icon type="home" /></Link>
+                    </Menu.Item>
+                    {navList.map((item,index)=>{
+                        return <Menu.Item key={index+1}>
+                            <Link to={"/"+item.name}>{item.name}</Link>
+                        </Menu.Item>
+                    })}
                     <Menu.Item key="4" style={{ float:'right' }}>
                         <Icon type="user" style={{ float:'left',lineHeight:'64px'}}/>
                         <Dropdown overlay={menu} trigger={['click']}>
@@ -115,12 +124,12 @@ const Home: React.FC = () => {
                         background:'#fff'
                     }}
                 >
+                    <Route path="/" component={HomePage} />
                     <Route path="/Components/Table" component={Tables} />
                     <Route path="/Components/Tabs" component={Tab} />
                     <Route path="/Components/Form" component={VForm} />
                     <Route path="/HttpRequest/GoodsMsg" component={GoodsMsg} />
                     <Route path="/404" component={NotFound} />
-
                 </Content>
             </Layout>
         </Layout>

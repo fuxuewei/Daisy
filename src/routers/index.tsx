@@ -17,6 +17,7 @@ const RoutersConfig = () => {
                 <Route path='/HttpRequest/:label' component={HomePage} />
                 <Route path='/login' exact={true} component={LoginPage} />
                 <Route path='/home' component={HomePage} />
+                <Route path="/" component={HomePage} />
                 <Route path="/404" component={HomePage} />
                 <Redirect to={redirect} />
             </Switch>
