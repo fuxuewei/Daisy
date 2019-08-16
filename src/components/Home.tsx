@@ -1,12 +1,10 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb, Icon, Dropdown } from 'antd';
 import { HashRouter as Router, Route, Link } from 'react-router-dom';
-import Tables from './topics/Table';
-import Tab from './topics/Tabs';
-import VForm from './topics/Form';
-import NotFound from './NotFound'
-import GoodsMsg from './requests/GoodsMsg'
 import HomePage from './topics/HomePage'
+import Data from './Data';
+import Img from './Img';
+
 const Home: React.FC = () => {
     interface Person{
         name:string | null;
@@ -32,34 +30,7 @@ const Home: React.FC = () => {
           </Menu.Item>
         </Menu>
     );
-    const nav = (navList:NavList[])=>{
-        let navBar = navList.map((value,index)=>{
-            return  <SubMenu
-                    key={'sub'+index}
-                    title={
-                        <span>
-                            <Icon type={value.icon} />
-                           {value.name}
-                        </span>
-                    }
-                    >
-                        {value.children?value.children.map((child:any,index:number)=>{
-                            return <Menu.Item key={child}>
-                              <Link to={"/"+value.name+"/"+child}>{child}</Link>
-                              </Menu.Item>
-                        }):()=>{console.log('null')}}
-                        
-                </SubMenu>
-        })
-        return <Menu
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                style={{ height:'100%',background:'#fff'}}
-                >{navBar}
-                </Menu>
-
-    }
+    
     let user = {name: localStorage.getItem("name")};
     let subnavs = [
         {
@@ -74,8 +45,8 @@ const Home: React.FC = () => {
         }
     ]
     const navList = [
-        {name:'Home'},
-        {name:'Img'}
+        {name:'Data'},
+        {name:'Carousel'}
     ]
     return (
       <Router>
@@ -107,31 +78,10 @@ const Home: React.FC = () => {
                 </Menu>
             </Header>
         <Layout>
-            <Sider width={200} style={{ background:'#fff' }}>
-                {nav(subnavs)}
-            </Sider>
-            <Layout style={{padding: '0 24px 24px'}}>
-                <Breadcrumb style={{ margin: '16px 0' }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>{window.location.hash.split('/')[1]}</Breadcrumb.Item>
-                    <Breadcrumb.Item>{window.location.hash.split('/')[2]}</Breadcrumb.Item>
-                </Breadcrumb>
-                <Content
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 280,
-                        background:'#fff'
-                    }}
-                >
-                    <Route path="/" component={HomePage} />
-                    <Route path="/Components/Table" component={Tables} />
-                    <Route path="/Components/Tabs" component={Tab} />
-                    <Route path="/Components/Form" component={VForm} />
-                    <Route path="/HttpRequest/GoodsMsg" component={GoodsMsg} />
-                    <Route path="/404" component={NotFound} />
-                </Content>
-            </Layout>
+            {/* exact 精确匹配 */}
+            <Route path="/Data" component={Data} />
+            <Route exact path="/Carousel" component={Img} />
+            <Route exact path="/" component={HomePage} />
         </Layout>
         </Layout>
         </Router>

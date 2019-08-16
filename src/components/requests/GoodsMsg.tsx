@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import '../../assets/less/goodsmsg.less';
 import { Tree,Tag, Input, Tooltip, Icon } from 'antd';
-import { OmitProps } from 'antd/lib/transfer/renderListBody';
 import * as R from 'ramda'
 
 const { TreeNode } = Tree;

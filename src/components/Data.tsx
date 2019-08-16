@@ -34,13 +34,13 @@ const Data = ()=>{
                     title={
                         <span>
                             <Icon type={value.icon} />
-                           {value.name}
+                           <span>{value.name}</span>
                         </span>
                     }
                     >
                         {value.children?value.children.map((child:any,index:number)=>{
                             return <Menu.Item key={child}>
-                              <Link to={"/"+value.name+"/"+child}>{child}</Link>
+                              <Link to={"/Data/"+value.name+"/"+child}>{child}</Link>
                               </Menu.Item>
                         }):()=>{console.log('null')}}
                         
@@ -57,7 +57,7 @@ const Data = ()=>{
     }
     return (
         <Router>
-              <Sider width={200} style={{ background:'#fff' }}>
+              <Sider collapsible width={200} style={{ background:'#fff' }} theme="dark">
                   {nav(subnavs)}
               </Sider>
               <Layout style={{padding: '0 24px 24px'}}>
@@ -65,6 +65,7 @@ const Data = ()=>{
                       <Breadcrumb.Item>Home</Breadcrumb.Item>
                       <Breadcrumb.Item>{window.location.hash.split('/')[1]}</Breadcrumb.Item>
                       <Breadcrumb.Item>{window.location.hash.split('/')[2]}</Breadcrumb.Item>
+                      <Breadcrumb.Item>{window.location.hash.split('/')[3]}</Breadcrumb.Item>
                   </Breadcrumb>
                   <Content
                       style={{
@@ -74,11 +75,11 @@ const Data = ()=>{
                           background:'#fff'
                       }}
                   >
-                      <Route path="/Components/Table" component={Tables} />
-                      <Route path="/Components/Tabs" component={Tab} />
-                      <Route path="/Components/Form" component={VForm} />
-                      <Route path="/HttpRequest/GoodsMsg" component={GoodsMsg} />
-                      <Route path="/404" component={NotFound} />
+                      <Route path="/Data/Components/Table" component={Tables} />
+                      <Route path="/Data/Components/Tabs" component={Tab} />
+                      <Route path="/Data/Components/Form" component={VForm} />
+                      <Route path="/Data/HttpRequest/GoodsMsg" component={GoodsMsg} />
+                      <Route path="/Data/404" component={NotFound} />
                   </Content>
               </Layout>
           </Router>

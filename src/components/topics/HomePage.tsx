@@ -1,9 +1,9 @@
 import React from 'react'
-
+import '../../assets/less/homepage.less'
 const HomPage = ()=>{
     return (
-        <div>
-            vv's project
+        <div className="homepage">
+            WELCOME
         </div>
     )
 }
