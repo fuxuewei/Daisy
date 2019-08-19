@@ -2,21 +2,21 @@ import * as React from 'react';
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import Home from '../components/Home';
 import LoginPage from '../components/Login';
+import {routerConfig} from './routerConfig'
+import {FrontendAuth} from '../components/frontend/FrontendAuth'
 
 const basename = '/';
 
 const RoutersConfig = () => {
     var redirect = '/login'
-    if(localStorage.getItem("name")){
-        redirect = '/404'
-    }
     return (
         <Router basename={basename}>
             <Switch>
-                <Route path='/login' exact={true} component={LoginPage} />
+                <FrontendAuth config={routerConfig} />
+                {/* <Route path='/login' exact component={LoginPage} />
                 <Route path="/" component={Home} />
-                <Route path="/404" component={Home} />
-                <Redirect to={redirect} />
+                <Route path="/404" exact component={Home} />
+                <Redirect from="/*" to={redirect} /> */}
             </Switch>
         </Router>
     );

@@ -23,14 +23,14 @@ const Data = ()=>{
         }
     ]
     interface NavList{
-        name:string | null;
+        name:string | number | undefined;
         children:string[] | null;
         icon:string | undefined
     }
     const nav = (navList:NavList[])=>{
         let navBar = navList.map((value,index)=>{
             return  <SubMenu
-                    key={'sub'+index}
+                    key={value.name}
                     title={
                         <span>
                             <Icon type={value.icon} />
@@ -48,16 +48,16 @@ const Data = ()=>{
         })
         return <Menu
                 mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                style={{ height:'100%',background:'#fff'}}
+                defaultSelectedKeys={[window.location.hash.split('/')[3]]}
+                defaultOpenKeys={[window.location.hash.split('/')[2]]}
+                style={{ height:'100%'}}
                 >{navBar}
                 </Menu>
 
     }
     return (
         <Router>
-              <Sider collapsible width={200} style={{ background:'#fff' }} theme="dark">
+              <Sider collapsible width={200}  style={{ background:'#fff' }}>
                   {nav(subnavs)}
               </Sider>
               <Layout style={{padding: '0 24px 24px'}}>
@@ -79,7 +79,7 @@ const Data = ()=>{
                       <Route path="/Data/Components/Tabs" component={Tab} />
                       <Route path="/Data/Components/Form" component={VForm} />
                       <Route path="/Data/HttpRequest/GoodsMsg" component={GoodsMsg} />
-                      <Route path="/Data/404" component={NotFound} />
+                      {/* <Route path="/Data/404" component={NotFound} /> */}
                   </Content>
               </Layout>
           </Router>

@@ -32,18 +32,6 @@ const Home: React.FC = () => {
     );
     
     let user = {name: localStorage.getItem("name")};
-    let subnavs = [
-        {
-            name:'Components',
-            children:['Table','Tabs','Form'],
-            icon:'menu'
-        },
-        {
-            name:'HttpRequest',
-            children:['GoodsMsg'],
-            icon:'global'
-        }
-    ]
     const navList = [
         {name:'Data'},
         {name:'Carousel'}
@@ -56,14 +44,14 @@ const Home: React.FC = () => {
                 <Menu
                 theme="dark"
                 mode="horizontal"
-                defaultSelectedKeys={['0']}
+                defaultSelectedKeys={[window.location.hash.split('/')[1] ? window.location.hash.split('/')[1] :  '0']}
                 style={{ lineHeight: '64px'}}
                 >
                     <Menu.Item key="0">
                         <Link to={"/"}><Icon type="home" /></Link>
                     </Menu.Item>
                     {navList.map((item,index)=>{
-                        return <Menu.Item key={index+1}>
+                        return <Menu.Item key={item.name ? item.name : '0'}>
                             <Link to={"/"+item.name}>{item.name}</Link>
                         </Menu.Item>
                     })}
