@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Layout,Tabs,Icon,Modal,Button,Form,Input,Radio } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { setTest,getTest} from '../globalState/test'
 
 const { TabPane } = Tabs;
 
@@ -109,6 +110,8 @@ class Tab extends React.Component {
                 onCancel={this.handleCancel}
                 onCreate={this.handleCreate}
             />
+            <div >名称：{getTest('x')}</div>
+            <button onClick = {()=>setTest('x',getTest('x')?getTest('x') : 0+1)}>vv</button>
         </div>
     )
     }

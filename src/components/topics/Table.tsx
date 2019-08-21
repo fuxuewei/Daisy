@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { Table, Divider, Tag } from 'antd';
+import { setTest,getTest} from '../globalState/test'
+import globalState from '../globalState/index'
 
 interface Record{
     name:String
 }
-
 
 const Tables: React.FC = () => {
 
@@ -83,8 +84,15 @@ const [data,setData] = useState([
     tags: ['cool', 'teacher'],
   },
 ]);
+const [key,setKey] = useState(0)
 return (
-    <Table columns={columns} dataSource={data} />
+  <div>
+    <Table columns={columns} dataSource={data} key={key}/>
+    <div>名称：{getTest('x')}</div>
+    <button onClick = {()=> {
+      setTest('x',getTest('x') ? getTest('x')+1 : 0)
+    }}>change</button>
+  </div>
 )
 }
 export default Tables
