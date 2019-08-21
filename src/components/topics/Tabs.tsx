@@ -110,8 +110,10 @@ class Tab extends React.Component {
                 onCancel={this.handleCancel}
                 onCreate={this.handleCreate}
             />
-            <div >名称：{getTest('x')}</div>
-            <button onClick = {()=>setTest('x',getTest('x')?getTest('x') : 0+1)}>vv</button>
+            {/* <div >名称：{getTest('x')}</div>
+            <button onClick = {()=>setTest('x',getTest('x')?getTest('x') : 0+1)}>vv</button> */}
+            <div>{getTest('price')}</div>
+            <button onClick={()=>setTest('price',100)}>100</button>
         </div>
     )
     }
