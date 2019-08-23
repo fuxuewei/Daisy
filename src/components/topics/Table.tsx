@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { Table, Divider, Tag } from 'antd';
 import { setTest,getTest} from '../globalState/test'
 import Const from '../globalState/Const'
+import axios from 'axios';
 
 interface Record{
     name:String
@@ -11,20 +12,20 @@ const Tables: React.FC = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
       render: (text: String) => <a href="javascript:;">{text}</a>,
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'Media_Name',
+      dataIndex: 'media_name',
+      key: 'media_name',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Login_Name',
+      dataIndex: 'login_name',
+      key: 'login_name',
     },
     {
       title: 'Tags',
@@ -46,46 +47,46 @@ const Tables: React.FC = () => {
         </span>
       ),
     },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text:String, record:Record,index:number) => (
-        <span>
-          <a href="javascript:;">Invite {record.name}</a>
-          <Divider type="vertical" />
-          <a href="javascript:;" onClick={()=> {
-            data.splice(index,1);
-            console.log(data);
-            setData(data)}}>Delete</a>
-        </span>
-      ),
-    },
   ];
-const [data,setData] = useState([
+ const params = {
+    display_title: "",
+    page: 1,
+    pagesize: 10
+ }
+//  const [data,setData] = useState([])
+ const [data,setData] = useState([
   {
-    key: '1',
-    name: 'John Brown',
+    id: '1',
+    login_name: 'John Brown',
     age: 32,
-    address: 'New York No. 1 Lake Park',
+    media_name: 'New York No. 1 Lake Park',
     tags: ['nice', 'developer'],
   },
   {
-    key: '2',
-    name: 'Jim Green',
+    id: '2',
+    login_name: 'Jim Green',
     age: 42,
-    address: 'London No. 1 Lake Park',
+    media_name: 'London No. 1 Lake Park',
     tags: ['loser'],
   },
   {
-    key: '3',
-    name: 'Joe Black',
+    id: '3',
+    login_name: 'Joe Black',
     age: 32,
-    address: 'Sidney No. 1 Lake Park',
+    media_name: 'Sidney No. 1 Lake Park',
     tags: ['cool', 'teacher'],
   },
 ]);
+useEffect(() => {
+  axios.post('/ser/opinionRecoverController/selectOpinionDeleted',params).then((res:any)=>{
+    if(res.data.length>0){
+      setData(res.data)
+    }
+  })
+});
 return (
   <div>
+    
     <Table columns={columns} dataSource={data}/>
     <div>{getTest('price')}</div>
     <button onClick={()=>setTest('price',80)}>80</button>
