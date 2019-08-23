@@ -1,24 +1,24 @@
 //订阅器
 
 class Dep {
-    constructor(){
-        this.subs = []
-    }
+    
+    static subs = []
+    
     //增加订阅者
-    addSub(sub){
+    static addSub(sub){
         this.subs.push(sub);
     }
     //判断是否增加订阅者
-    depend () {
+    static depend () {
         if (Dep.target) {
             this.addSub(Dep.target)
         }
     }
 
     //通知订阅者更新
-    notify(){
+    static notify(){
         this.subs.forEach((sub) =>{
-            sub.update()
+            sub.setState({})
         })
     }
 }

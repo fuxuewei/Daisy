@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Layout,Tabs,Icon,Modal,Button,Form,Input,Radio } from 'antd';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { setTest,getTest} from '../globalState/test'
+import Const from '../globalState/Const'
 
 const { TabPane } = Tabs;
 
@@ -119,4 +120,4 @@ class Tab extends React.Component {
     }
 }
 
-export default Tab
+export default Const(Tab)

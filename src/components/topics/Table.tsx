@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Table, Divider, Tag } from 'antd';
 import { setTest,getTest} from '../globalState/test'
-// import {globalState} from '../globalState/index'
+import Const from '../globalState/Const'
 
 interface Record{
     name:String
@@ -84,17 +84,12 @@ const [data,setData] = useState([
     tags: ['cool', 'teacher'],
   },
 ]);
-const [key,setKey] = useState(0)
 return (
   <div>
-    <Table columns={columns} dataSource={data} key={key}/>
-    {/* <div>名称：{getTest('x')}</div>
-    <button onClick = {()=> {
-      setTest('x',getTest('x') ? getTest('x')+1 : 0)
-    }}>change</button> */}
+    <Table columns={columns} dataSource={data}/>
     <div>{getTest('price')}</div>
     <button onClick={()=>setTest('price',80)}>80</button>
   </div>
 )
 }
-export default Tables
+export default Const(Tables)
