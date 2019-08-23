@@ -4,6 +4,8 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import HomePage from './topics/HomePage'
 import Data from './Data';
 import Img from './Img';
+import { message } from 'antd';
+import '../assets/less/home.less';
 
 const Home: React.FC = () => {
     interface Person{
@@ -22,11 +24,15 @@ const Home: React.FC = () => {
     const menu = (
         <Menu>
           <Menu.Item key="0">
-            <a href="https://github.com/fuxuewei">gitHub</a>
+            <a href="https://github.com/fuxuewei"><Icon type="github"/><span className="icon">gitHub</span></a>
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item key="1">
-            <a href="https://juejin.im/user/5d070e336fb9a07f0052dae6">juejin</a>
+            <a href="https://juejin.im/user/5d070e336fb9a07f0052dae6"><Icon type="solution" /><span className="icon">juejin</span></a>
+          </Menu.Item>
+          <Menu.Divider />
+          <Menu.Item key="2">
+            <a href="/" onClick={()=>{localStorage.removeItem('name');message.success('Successful exit');}}><Icon type="logout" /><span className="icon">Exit</span></a>
           </Menu.Item>
         </Menu>
     );

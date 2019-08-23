@@ -3,6 +3,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import '../assets/less/login.less';
+import axios from 'axios';
 
 interface ILoginParam {
     username: string;
@@ -30,8 +31,20 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginParam> {
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 try {
-                    localStorage.setItem( "name", values.username)
-                    this.props.history.push('/home');
+                    axios.get('/ser/user/login?loginName='+values.username+'&password='+values.password).then((res:any)=>{
+                        if(res.data.code==0){
+                            message.error('This is an error message');
+                        }else{
+                            localStorage.setItem( "name", values.username)
+                            localStorage.setItem( "password", values.password)
+                            sessionStorage.username = values.username;
+                            sessionStorage.menu=res.data.authority;
+                            this.props.history.push('/');
+                            message.success('welcome');
+                        }
+                    }).catch((err)=>{
+                        console.log(err)
+                    })
                 } catch (error) {
                     message.error(JSON.stringify(error));
                 }

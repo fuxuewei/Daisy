@@ -31,6 +31,9 @@ export const routerConfig:routerConfigModel[] = [
         path:'/Data/Components/Table',
         component:Home,
     },{
+        path:'/Data/Components/Form',
+        component:Home,
+    },{
         path:'/Carousel',
         component:Home,
     },
