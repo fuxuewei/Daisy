@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import { Table, Divider, Tag } from 'antd';
+import { Table, Input } from 'antd';
 import { setTest,getTest} from '../globalState/test'
 import Const from '../globalState/Const'
 import axios from 'axios';
@@ -7,7 +7,7 @@ import axios from 'axios';
 interface Record{
     name:String
 }
-
+const { Search } = Input
 const Tables: React.FC = () => {
 
   const columns = [
@@ -15,6 +15,10 @@ const Tables: React.FC = () => {
       title: 'Id',
       dataIndex: 'id',
       key: 'id',
+    },{
+      title: 'Display_Title',
+      dataIndex: 'display_title',
+      key: 'display_title',
       render: (text: String) => <a href="javascript:;">{text}</a>,
     },
     {
@@ -27,26 +31,6 @@ const Tables: React.FC = () => {
       dataIndex: 'login_name',
       key: 'login_name',
     },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (tags: { map: (arg0: (tag: any) => JSX.Element) => React.ReactNode; }) => (
-        <span>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </span>
-      ),
-    },
   ];
  const params = {
     display_title: "",
@@ -54,40 +38,71 @@ const Tables: React.FC = () => {
     pagesize: 10
  }
 //  const [data,setData] = useState([])
- const [data,setData] = useState([
-  {
-    id: '1',
-    login_name: 'John Brown',
-    age: 32,
-    media_name: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    id: '2',
-    login_name: 'Jim Green',
-    age: 42,
-    media_name: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    id: '3',
-    login_name: 'Joe Black',
-    age: 32,
-    media_name: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-]);
+ const [data,setData] = useState([]);
+ const [total,setTotal] = useState()
 useEffect(() => {
   axios.post('/ser/opinionRecoverController/selectOpinionDeleted',params).then((res:any)=>{
-    if(res.data.length>0){
-      setData(res.data)
+    if(res.data.data.length>0){
+      const ss =res.data.data.map((item:any,index:number)=>{
+        item.key = index
+        return item
+      })
+      setData(ss)
+      setTotal(res.data.total)
     }
   })
-});
+},[]);
+
+function getDelData(page:number){
+  const params = {
+    display_title: "",
+    page: page,
+    pagesize: 10
+ }
+  axios.post('/ser/opinionRecoverController/selectOpinionDeleted',params).then((res:any)=>{
+    if(res.data.data.length>0){
+      const ss =res.data.data.map((item:any,index:number)=>{
+        item.key = index
+        return item
+      })
+      console.log(ss)
+      setData(ss)
+      
+    }
+  })
+}
+
+function findDels(value:string){
+  const params = {
+    display_title: value,
+    endtime: "2018-10-19 00:00:00",
+    page: 1,
+    pagesize: 10,
+    starttime: "2018-10-05 00:00:00",
+ }
+  axios.post('/ser/opinionRecoverController/selectOpinionDeleted',params).then((res:any)=>{
+    var ss = []
+    if(res.data.data.length>0){
+      ss =res.data.data.map((item:any,index:number)=>{
+        item.key = index
+        return item
+    })
+    setData(ss)
+    setTotal(res.data.total)
+    }
+  })
+}
 return (
   <div>
-    
-    <Table columns={columns} dataSource={data}/>
+    <Search
+      placeholder="input search text"
+      enterButton="Search"
+      size="large"
+      onSearch={value => findDels(value)}
+    />
+    <Table columns={columns} dataSource={data} pagination={{
+            onChange:getDelData,total: total
+          }}/>
     <div>{getTest('price')}</div>
     <button onClick={()=>setTest('price',80)}>80</button>
   </div>
