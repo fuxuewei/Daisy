@@ -80,17 +80,17 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginParam> {
 
     getPassword(){
         var passwordList:any = []
-        document.cookie.split(';').map((item:any)=>{
-            passwordList.push({name:item.split("=")[0].replace(/\s+/g,""),pwd:item.split("=")[1].replace(/\s+/g,"")})
-        })
+        if(document.cookie){
+            document.cookie.split(';').map((item:any)=>{
+                passwordList.push({name:item.split("=")[0].replace(/\s+/g,""),pwd:item.split("=")[1].replace(/\s+/g,"")})
+            })
+        }
         return passwordList
     }
     showPassword(){
         this.setState({
             showList: true
           });
-        console.log(this.state.passwordList)
-        console.log(this.state.showList)
     }
 
     chooseList = ()=>{
@@ -141,7 +141,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginParam> {
                                     initialValue: this.state.password,
                                     rules: [{ required: true, message: '密码不能为空' }]
                                 })(
-                                    <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder='password' />
+                                    <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder='password' onChange={()=>this.setState({showList:false})}/>
                                 )}
                                 </div>
                                 <Vlist />
