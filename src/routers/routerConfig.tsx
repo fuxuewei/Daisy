@@ -36,5 +36,8 @@ export const routerConfig:routerConfigModel[] = [
     },{
         path:'/Carousel',
         component:Home,
+    },{
+        path:'/Test',
+        component:Home,
     },
 ];

@@ -5,6 +5,7 @@ import HomePage from './topics/HomePage'
 import Data from './Data';
 import Img from './Img';
 import { message } from 'antd';
+import Test from './Test'
 import '../assets/less/home.less';
 
 const Home: React.FC = () => {
@@ -40,7 +41,8 @@ const Home: React.FC = () => {
     let user = {name: localStorage.getItem("name")};
     const navList = [
         {name:'Data'},
-        {name:'Carousel'}
+        {name:'Carousel'},
+        {name:'Test'}
     ]
     return (
       <Router>
@@ -75,6 +77,7 @@ const Home: React.FC = () => {
             {/* exact 精确匹配 */}
             <Route path="/Data" component={Data} />
             <Route exact path="/Carousel" component={Img} />
+            <Route exact path="/Test" component={Test} />
             <Route exact path="/" component={HomePage} />
         </Layout>
         </Layout>

@@ -53,8 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^4.3.4",
-    "jest": "^24.9.0"
+    "@types/react-router-dom": "^4.3.4"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "config-overrides.js",
