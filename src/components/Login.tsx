@@ -62,22 +62,22 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginParam> {
     }
 
     //设置cookie
-  setCookie(name:string,value:any,day:number){
+    setCookie(name:string,value:any,day:number){
         var date = new Date();
         date.setDate(date.getDate() + day);
         document.cookie = name + '=' + value + ';expires='+ date;
-  };
-  //获取cookie
-  getCookie(name:string){
-    var reg = RegExp(name+'=([^;]+)');
-    var arr = document.cookie.match(reg);
-    if(arr){
-      return arr[1];
-    }else{
-      return '';
-    }
-  };
-
+    };
+    //获取cookie
+    getCookie(name:string){
+        var reg = RegExp(name+'=([^;]+)');
+        var arr = document.cookie.match(reg);
+        if(arr){
+            return arr[1];
+        }else{
+            return '';
+        }
+    };
+    //获取密码列表
     getPassword(){
         var passwordList:any = []
         if(document.cookie){
@@ -90,7 +90,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginParam> {
     showPassword(){
         this.setState({
             showList: true
-          });
+            });
     }
 
     chooseList = ()=>{
