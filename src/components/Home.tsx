@@ -29,7 +29,7 @@ const Home: React.FC = () => {
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item key="1">
-            <a href="https://juejin.im/user/5d070e336fb9a07f0052dae6"><Icon type="solution" /><span className="icon">juejin</span></a>
+            <a href="https://juejin.im/user/5d070e336fb9a07f0052dae6"><Icon type="solution" /><span className="icon">掘金</span></a>
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item key="2">

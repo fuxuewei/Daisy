@@ -37,23 +37,23 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginParam> {
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
                 try {
-                    axios.get('/ser/user/login?loginName='+values.username+'&password='+values.password).then((res:any)=>{
-                        if(res.data.code==0){
-                            message.error('用户名或密码错误');
-                        }else{
-                            if(values.remember){
-                                this.setCookie(values.username,values.password,7);
-                            }
+                    // axios.get('/ser/user/login?loginName='+values.username+'&password='+values.password).then((res:any)=>{
+                    //     if(res.data.code==0){
+                    //         message.error('用户名或密码错误');
+                    //     }else{
+                    //         if(values.remember){
+                    //             this.setCookie(values.username,values.password,7);
+                    //         }
                             localStorage.setItem( "name", values.username)
                             localStorage.setItem( "password", values.password)
                             sessionStorage.username = values.username;
                             sessionStorage.password = values.password;
                             this.props.history.push('/');
                             message.success('welcome');
-                        }
-                    }).catch((err)=>{
-                        message.error('服务器错误');
-                    })
+                    //     }
+                    // }).catch((err)=>{
+                    //     message.error('服务器错误');
+                    // })
                 } catch (error) {
                     message.error('服务器错误');
                 }
